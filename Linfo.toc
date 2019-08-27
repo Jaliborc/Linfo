@@ -4,5 +4,6 @@
 ## Author: Jaliborc (João Cardoso)
 ## X-Category: Development Tools
 ## X-License: GNU General Public License Version 3
+## Version: 8.2.2
 
 Linfo.lua
