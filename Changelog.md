@@ -1,3 +1,6 @@
+#### 8.3.0
+* Updated for Visions of Nzoth.
+
 ##### 8.2.2
 * Updated for classic servers.
 

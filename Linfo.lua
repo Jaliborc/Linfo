@@ -1,5 +1,5 @@
 --[[
-Copyright 2008-2019 João Cardoso
+Copyright 2008-2020 João Cardoso
 Linfo is distributed under the terms of the GNU General Public License (or the Lesser GPL).
 This file is part of Linfo.
 

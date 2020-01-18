@@ -1,9 +1,9 @@
-## Interface: 80200
+## Interface: 11303
 ## Title: |cff66ccffLinfo|r
 ## Notes: Displays on any hiperlink tooltip the correspondent link string and icon texture source path.
 ## Author: Jaliborc (João Cardoso)
 ## X-Category: Development Tools
 ## X-License: GNU General Public License Version 3
-## Version: 8.2.2
+## Version: 8.3.0
 
 Linfo.lua
