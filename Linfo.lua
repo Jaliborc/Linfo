@@ -1,5 +1,5 @@
 --[[
-Copyright 2008-2020 João Cardoso
+Copyright 2008-2022 João Cardoso
 Linfo is distributed under the terms of the GNU General Public License (or the Lesser GPL).
 This file is part of Linfo.
 
@@ -19,84 +19,64 @@ along with Linfo. If not, see <http://www.gnu.org/licenses/>.
 
 local Meta = getmetatable(CreateFrame('GameTooltip', 'LinfoTooltip', nil, 'GameTooltipTemplate')).__index
 
-local function Print(self, ...)
-	if type(...) == 'string' then
-		self:AddLine(...)
-		self:Show()
+local function Hook(api, handler)
+	if Meta[api] then
+		hooksecurefunc(Meta, api, handler)
 	end
 end
 
+local function Print(self, ...)
+	self:AddLine(...)
+	self:Show()
+end
+
 local function PrintLink(self, link)
-	link = strmatch(link or '', '([^H]+:[^|]+)')
-	Print(self, link, 0, 0.6, 0.6)
+	link = strmatch(link or '', '([^H]+:[^|]+)') or format('No Link: %s', link)
+	Print(self, '|n' .. link, 0, 0.6, 0.6)
 end
 
 local function PrintTexture(self, texture)
-	Print(self, texture, 0, 1, 1)
+	Print(self, format('|T%s:0|t =%s', texture, texture), 0, 0.6, 0.6)
 end
 
 
 --[[ Actions ]]--
 
-hooksecurefunc(Meta, 'SetAction', function(self, slot)
+Hook('SetAction', function(self, slot)
 	local kind, id = GetActionInfo(slot)
-
-	PrintTexture(self, GetActionTexture(slot))
 	if kind and id then
 		PrintLink(self, (kind..':'..id))
+		PrintTexture(self, GetActionTexture(slot))
 	end
-end)
-
-
---[[ Spells ]]--
-
-local spellFunctions = {
-	'SetPetAction',
-	'SetShapeshift',
-	'SetQuestRewardSpell',
-	'SetQuestLogRewardSpell',
-	'SetSpellByID',
-}
-
-local function PrintSpell(self)
-	local spell = self:GetSpell()
-	if spell then
-		PrintTexture(self, GetSpellTexture(spell))
-		PrintLink(self, GetSpellLink(spell, rank))
-	end
-end
-
-for _,Func in pairs(spellFunctions) do
-	hooksecurefunc(Meta, Func, PrintSpell)
-end
-
-
---[[ Talents ]]--
-
-local inspect
-hooksecurefunc('InspectUnit', function(unit)
-	inspect = unit ~= "player"
-end)
-
-hooksecurefunc(Meta, 'SetTalent', function(self, tabIndex, talentIndex)
-	local texture = select(2, GetTalentInfo(tabIndex, talentIndex, inspect))
-	local link = GetTalentLink(tabIndex, talentIndex, inspect)
-
-	PrintTexture(self, texture)
-	PrintLink(self, link)
 end)
 
 
 --[[ Items ]]--
 
-local itemFunctions = {
+Hook('SetRecipeReagentItem', function(self, ...)
+	local link = (C_TradeSkillUI.GetRecipeReagentItemLink or C_TradeSkillUI.GetRecipeFixedReagentItemLink)(...)
+	local texture = select(2, C_TradeSkillUI.GetRecipeReagentInfo(...))
+	if link then
+		PrintLink(self, link)
+		PrintTexture(self, texture)
+	end
+end)
+
+local function PrintItem(self)
+	local item = select(2, self:GetItem())
+	if item then
+		PrintLink(self, item)
+		PrintTexture(self, GetItemIcon(item))
+	end
+end
+
+for _,func in pairs({
 	'SetLootRollItem',
 	'SetMerchantCostItem',
 	'SetMerchantItem',
 	'SetQuestLogItem',
 	'SetInventoryItem',
 	'SetSocketedItem',
-	'SetRecipeReagentItem',
 	'SetRecipeResultItem',
 	'SetQuestLogSpecialItem',
 	'SetBuybackItem',
@@ -110,37 +90,76 @@ local itemFunctions = {
 	'SetQuestItem',
 	'SetTradeTargetItem',
 	'SetTradePlayerItem',
-}
+}) do
+		Hook(func, PrintItem)
+end
 
-local function PrintItem(self)
-	local item = select(2, self:GetItem())
-	if item then
-		PrintTexture(self, GetItemIcon(item))
-		PrintLink(self, item)
+
+--[[ Spells ]]--
+
+local function PrintSpell(self)
+	local name, id = self:GetSpell()
+	if id then
+		PrintLink(self, GetSpellLink(id))
+		PrintTexture(self, GetSpellTexture(id))
 	end
 end
 
-for _,func in pairs(itemFunctions) do
-	if Meta[func] then
-		hooksecurefunc(Meta, func, PrintItem)
-	end
+for _,func in pairs({
+	'SetPetAction',
+	'SetShapeshift',
+	'SetQuestRewardSpell',
+	'SetQuestLogRewardSpell',
+	'SetSpellBookItem',
+	'SetSpellByID',
+}) do
+	Hook(func, PrintSpell)
 end
+
+
+--[[ Talents ]]--
+
+local inspect
+hooksecurefunc('InspectUnit', function(unit)
+	inspect = unit ~= "player"
+end)
+
+Hook('SetTalent', function(self, arg1, arg2)
+	local texture = GetTalentInfoByID and select(3, GetTalentInfoByID(arg1)) or select(2, GetTalentInfo(arg1, arg2, inspect))
+	local link = GetTalentInfoByID and GetTalentLink(arg1, arg2, inspect) or GetTalentInfo(arg1, arg2, inspect)
+	if link then
+		PrintLink(self, link)
+		PrintTexture(self, texture)
+	end
+end)
+
+Hook('SetPvpTalent', function(self, id)
+	local texture = select(3, GetPvpTalentInfoByID(id))
+	local link = GetPvpTalentLink(id)
+	if link then
+		PrintLink(self, link)
+		PrintTexture(self, texture)
+	end
+end)
 
 
 --[[ Hyperlinks ]]--
 
-hooksecurefunc(Meta, 'SetHyperlink', function(self, link)
+Hook('SetHyperlink', function(self, link)
 	if strmatch(link, 'item:') then
 		PrintItem(self)
 	elseif strmatch(link, 'spell:') then
 		PrintSpell(self)
-	--elseif strmatch(link, 'talent:') then
-		----To do texture...
 	else
-		local id = strmatch(link, 'achievement:(%d+)')
-		if id then
-			PrintTexture(self, select(10, GetAchievementInfo(id)))
-		end
 		PrintLink(self, link)
+
+		local type, id = strmatch(link, '(%D+):(%d+)')
+		if type == 'achievement' then
+			PrintTexture(self, select(10, GetAchievementInfo(id)))
+		elseif type == 'talent' then
+			PrintTexture(self, select(3, GetTalentInfoByID(id)))
+		elseif type == 'pvptal' then
+			PrintTexture(self, select(3, GetPvpTalentInfoByID(id)))
+		end
 	end
 end)

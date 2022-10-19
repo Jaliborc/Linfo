@@ -1,4 +1,4 @@
---[[ Small code I use to extract the API function form the tooltips Meta. Not loaded by the TOC ]]--
+--[[ Small code used to extract the API function form the tooltips Meta. Not loaded by the TOC ]]--
 
 --------------------------------
 local TYPE = 'Item'

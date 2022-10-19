@@ -1,3 +1,6 @@
+##### 9.0.1
+* Fixed multiple bugs, improved texture ID display.
+
 #### 9.0.0
 * Updated for Shadowlands.
 

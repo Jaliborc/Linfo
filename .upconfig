@@ -2,3 +2,5 @@
   20283
 [ignore]
   Extractor.lua
+[incompatible]
+  10.x.x
