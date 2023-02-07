@@ -1,9 +1,10 @@
 ## Interface: 11403
-## Title: |cff66ccffLinfo|r
-## Notes: Displays on any hiperlink tooltip the correspondent link string and icon texture source path.
+## Title: |cffE5E5E5Linfo|r
+## Notes: Displays on any hiperlink tooltip the correspondent|nlink string and icon texture source path.|n|cffbbbbbbBy João Cardoso|r|n|n |cff82c5ffpatreon.com/jaliborc|r|n |cff82c5ffpaypal.me/jaliborc|r|n |cff82c5ffbit.ly/discord-jaliborc|r
 ## Author: Jaliborc (João Cardoso)
-## X-Category: Development Tools
+
 ## X-License: GNU General Public License Version 3
+## X-Category: Development Tools
 ## Version: 9.0.1
 
 Linfo.lua
