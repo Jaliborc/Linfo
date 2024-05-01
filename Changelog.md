@@ -1,19 +1,24 @@
-##### 9.0.1
+## 10.0
+* Updated for Cataclysm servers.
+* IconTexture support.
+* TOC updates.
+
+### 9.0.1
 * Fixed multiple bugs, improved texture ID display.
 
-#### 9.0.0
+## 9.0
 * Updated for Shadowlands.
 
-#### 8.3.0
+### 8.3
 * Updated for Visions of Nzoth.
 
-##### 8.2.2
+### 8.2.2
 * Updated for classic servers.
 
-##### 8.2.0
+### 8.2
 * Updated for World of Warcraft patch 8.2.0.
 
-##### 8.1.0
+## 8.1
 * Updated for World of Warcraft patch 8.1.0.
 
 ### 4
