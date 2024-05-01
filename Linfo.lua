@@ -1,5 +1,5 @@
 --[[
-Copyright 2008-2022 João Cardoso
+Copyright 2008-2024 João Cardoso
 Linfo is distributed under the terms of the GNU General Public License (or the Lesser GPL).
 This file is part of Linfo.
 
@@ -60,7 +60,7 @@ local function PrintUnit(self)
 	end
 end
 
-if TooltipDataProcessor then
+if C_TooltipInfo then
 	TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, PrintItem)
 	TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, PrintSpell)
 	TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, PrintUnit)
