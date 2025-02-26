@@ -1,3 +1,7 @@
+## 11.1
+* Updated for The War Within.
+* Retail: Added support for the new addon list native grouping capabilities.
+
 ## 10.0
 * Updated for Cataclysm servers.
 * IconTexture support.

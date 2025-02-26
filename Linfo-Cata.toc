@@ -1,10 +1,10 @@
-## Title: |TInterface/Addons/Linfo/Art/Gnomed:16:16|t Linfo
+## Title: |TInterface/Addons/Linfo/Art/Techbook:16:16|t Linfo
 ## Notes: Displays on any hiperlink tooltip the correspondent|nlink string and icon texture source path.|n|cffbbbbbbBy João Cardoso|r|n|n|TInterface/Addons/Linfo/Art/Patreon:12:12|t |cff82c5ffpatreon.com/jaliborc|r|n|TInterface/Addons/Linfo/Art/Paypal:12:12|t |cff82c5ffpaypal.me/jaliborc|r|n|TInterface/Addons/Linfo/Art/Discord:12:12:0:-2|t |cff82c5ffbit.ly/discord-jaliborc|r
 ## Author: Jaliborc (João Cardoso)
 ## X-License: All Rights Reserved
 ## X-Category: Development Tools
 
-## Interface: 40400
-## Version: 10.0
+## Interface: 40401
+## Version: 11.1
 
 Linfo.lua
