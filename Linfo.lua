@@ -46,10 +46,10 @@ end
 
 local function PrintSpell(self)
 	local name, id = self:GetSpell()
-	local link = id and GetSpellLink(id)
+	local link = id and C_Spell.GetSpellLink(id)
 	if link then
 		PrintLink(self, link)
-		PrintTexture(self, GetSpellTexture(id))
+		PrintTexture(self, C_Spell.GetSpellTexture(id))
 	end
 end
 
@@ -61,9 +61,15 @@ local function PrintUnit(self)
 end
 
 if C_TooltipInfo then
+	local function PrintID(prefix, self, data)
+		Print(self, '|n' .. prefix .. ':' .. data.id)
+	end
+
 	TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, PrintItem)
 	TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, PrintSpell)
 	TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, PrintUnit)
+	TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Quest, GenerateClosure(PrintID, 'quest'))
+	TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Achievement, GenerateClosure(PrintID, 'achievement'))
 else
 	local function Hook(frame)
 		frame:HookScript('OnTooltipSetItem', PrintItem)
@@ -81,7 +87,7 @@ else
 end
 
 
---[[ With Poor APIs ]]--
+--[[ Old APIs ]]--
 
 local Meta = getmetatable(GameTooltip).__index
 local function Hook(api, handler)

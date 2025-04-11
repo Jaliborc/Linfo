@@ -5,6 +5,6 @@
 ## X-Category: Development Tools
 
 ## Interface: 40401
-## Version: 11.1
+## Version: 11.1.1
 
 Linfo.lua

@@ -1,3 +1,7 @@
+## 11.1.1
+* All: Updated for the new C_Spell namespace.
+* Retail: Now shows achievement and quest link data.
+
 ## 11.1
 * Updated for The War Within.
 * Retail: Added support for the new addon list native grouping capabilities.
