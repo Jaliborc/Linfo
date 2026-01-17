@@ -1,4 +1,10 @@
-## 11.1.1
+### 11.2
+* Added support for TBC Anniversary realms.
+
+### 11.1.2
+* Added support for Midnight open beta.
+
+### 11.1.1
 * All: Updated for the new C_Spell namespace.
 * Retail: Now shows achievement and quest link data.
 
